@@ -1,21 +1,13 @@
-import mongoose from 'mongoose';
+import { MongoClient } from "mongodb";
 
-class Database {
+let connect = null
 
-  constructor(){
-    this.mongo();
-  }
-
-  mongo(){
-    this.mongoConnection = mongoose.connect(
-      process.env.MONGO_URL,
-      {
-        useNewUrlParser: true,
-        useFindAndModify: true
-      }
-    )
-  }
-
+/**
+ * @function
+ * @param uri - uri de banco de dados.
+ * @returns {Promise} Connect - Retornando conexão de banco de dados.
+ */
+exports.clientConnect = (uri) => {
+    if (connect === null) connect = MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    return connect
 }
-
-export default new Database();
