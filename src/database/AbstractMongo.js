@@ -1,11 +1,14 @@
-import { clientConnect } from './index';
+import pkg from 'mongodb';
+const { MongoClient } = pkg;
+import 'dotenv/config.js';
 
 class AbstractMongo {
 
-  #url;
+  #connection;
+
 
   constructor(){
-    this.#url = `${process.env.MONGO_URL}`;
+    this.#connection = MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
   }
 
   /**
@@ -13,14 +16,14 @@ class AbstractMongo {
    * @param  {number} skip
    * @return {number}
   */
-  skipsValidate = (skip) => (skip !== 0 && skip > 0) ? skip - 1 : 0
+  skipsValidate = (skip) => (skip !== 0 && skip > 0) ? skip - 1 : 0;
 
   /**
    * @function
    * @param limit
    * @returns {number|number}
   */
-  limitValidate = (limit) => parseInt(limit) > 0 ? parseInt(limit) : 10
+  limitValidate = (limit) => parseInt(limit) > 0 ? parseInt(limit) : 10;
 
   /**
    * @function
@@ -31,7 +34,7 @@ class AbstractMongo {
    */
   findAll = async (collection, query, options = {}) => {
       try {
-          const conn = await clientConnect(this.#url)
+          const conn = await this.#connection;
           const result = await conn.db().collection(collection).find(query, options).toArray()
           return result
       } catch (err) {
@@ -48,7 +51,7 @@ class AbstractMongo {
    */
   findOne = async (collection, query, options = {}) => {
       try {
-          const conn = await clientConnect(this.#url);
+          const conn = await this.#connection;
           const result = await conn.db().collection(collection).findOne(query, options);
           return result
       } catch (err) {
@@ -67,7 +70,7 @@ class AbstractMongo {
    */
   findAllPaginateAggregateNotQuery = async (collection, skip = 0, limit = 10, sort = { _id: -1 }) => {
       try {
-          const conn = await clientConnect(this.#url);
+          const conn = await this.#connection;
           const result = await conn.db().collection(collection).aggregate([
               {
                   $facet: {
@@ -108,7 +111,7 @@ class AbstractMongo {
    */
   findOneAndUpdate = async (collection, query, data, options = {}) => {
       try {
-          const conn = await clientConnect(this.#url);
+          const conn = await this.#connection;
           const result = await conn.db().collection(collection).findOneAndUpdate(query, data, options);
           return result;
       } catch (err) {
@@ -124,7 +127,7 @@ class AbstractMongo {
    */
   create = async (collection, data) => {
       try {
-          const conn = await clientConnect(this.#url);
+          const conn = await this.#connection;
           const result = await conn.db().collection(collection).insertOne(data);
           return result.ops[0];
       } catch (err) {
@@ -141,7 +144,7 @@ class AbstractMongo {
    */
    update = async (collection, query, data) => {
       try {
-          const conn = await clientConnect(this.#url);
+          const conn = await this.#connection;
           const { result } = await conn.db().collection(collection).updateOne(query, data)
 
           return { result }

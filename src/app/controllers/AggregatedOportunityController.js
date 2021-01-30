@@ -1,12 +1,11 @@
 import abstractMongo from '../../database/AbstractMongo';
 
-class AggregatedDealsController{
-
+class AggregatedOportunityController{
 
   async index(req, res){
     try {
-      const aggregatedDeals = await abstractMongo.findAll('aggregatedDeals');
-      return res.status(200).json(aggregatedDeals);
+      const aggregatedOportunities = await abstractMongo.findAll('aggregatedOportunities');
+      return res.status(200).json(aggregatedOportunities);
     } catch (error) {
       console.log(error);
       return res.status(500).json({message: 'Ocorreu um erro ao consultar as oportunidades'});
@@ -16,4 +15,4 @@ class AggregatedDealsController{
 }
 
 
-export default new AggregatedDealsController();
+export default new AggregatedOportunityController();

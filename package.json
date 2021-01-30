@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "author": "Davillo Aurélio Sidrim <davillo.dev@gmail.com>",
   "repository": "https://github.com/Davillo/linkapi-teste.git",
   "scripts": {
     "dev": "nodemon src/server.js",
     "dev:debug": "nodemon --inspect src/server.js",
-    "integration:run": "node ./src/integration/index.js"
+    "integration:run": "node src/app/integration/index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "js2xmlparser": "^4.0.1",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.3"
   },
   "devDependencies": {

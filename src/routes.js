@@ -1,9 +1,9 @@
 import {Router} from 'express';
-import AggregatedDealsController from './app/controllers/AggregatedDealsController';
+import AggregatedOportunityController from './app/controllers/AggregatedOportunityController';
 
 const routes = new Router();
 
-routes.get('/opportunities', AggregatedDealsController.index);
+routes.get('/opportunities', AggregatedOportunityController.index);
 
 
 export default routes;
