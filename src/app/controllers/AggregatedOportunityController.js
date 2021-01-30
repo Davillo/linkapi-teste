@@ -1,4 +1,4 @@
-import abstractMongo from '../../database/AbstractMongo';
+import abstractMongo from '../../database/AbstractMongo.js';
 
 class AggregatedOportunityController{
 

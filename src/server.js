@@ -1,4 +1,4 @@
-import app from './app';
-import 'dotenv/config';
+import 'dotenv/config.js';
+import app from './app.js';
 
 app.listen(process.env.EXPRESS_PORT);

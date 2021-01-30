@@ -10,6 +10,10 @@ class PipedriveBlingIntegration {
   async integrate () {
     const deals = await pipedriveService.fetchDeals();
 
+    if(!deals){
+      return ;
+    }
+
     const dealsWithProducts = deals.filter(deal => deal.products_count);
 
     let aggregatedDealsByDateAndValue = {};
@@ -24,7 +28,7 @@ class PipedriveBlingIntegration {
       aggregatedDealsByDateAndValue = aggregateDeal(aggregatedDealsByDateAndValue, deal);
     }
 
-    await AbstractMongo.create('aggregatedOportunities', aggregatedDealsByDateAndValue);
+    await AbstractMongo.saveAggregatedDeals(aggregatedDealsByDateAndValue);
   }
 
   normalizeDataToBling (deal, products) {

@@ -11,6 +11,12 @@ class AbstractMongo {
     this.#connection = MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
   }
 
+  async saveAggregatedDeals(date, sum){
+    const conn = await this.#connection;
+    const result = await conn.db().collection('aggregatedOportunities').insertOne({ date }, { date, sum }, { upsert: true });
+    return result;
+  }
+
   /**
    * @function
    * @param  {number} skip

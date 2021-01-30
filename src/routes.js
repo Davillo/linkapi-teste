@@ -1,5 +1,6 @@
-import {Router} from 'express';
-import AggregatedOportunityController from './app/controllers/AggregatedOportunityController';
+import pkg from 'express';
+const {Router} = pkg;
+import AggregatedOportunityController from './app/controllers/AggregatedOportunityController.js';
 
 const routes = new Router();
 
